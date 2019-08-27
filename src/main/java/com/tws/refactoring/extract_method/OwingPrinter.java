@@ -1,34 +1,45 @@
 package com.tws.refactoring.extract_method;
 
-import java.util.Enumeration;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 
 public class OwingPrinter {
     void printOwing(String name, List<Order> orders) {
         Iterator<Order> elements = orders.iterator();
-        double outstanding = 0.0;
+        double totalPrice = 0.0;
 
         // print banner
-        System.out.println ("*****************************");
-        System.out.println ("****** Customer totals ******");
-        System.out.println ("*****************************");
+        printBanner();
 
         // print owings
         while (elements.hasNext()) {
             Order each = (Order) elements.next();
-            outstanding += each.getAmount();
+            totalPrice += each.getAmount();
         }
 
         // print details
         System.out.println("name: " + name);
-        System.out.println("amount: " + outstanding);
+        System.out.println("amount: " + totalPrice);
+    }
+    
+    public static void main(String[] args) {
+    	OwingPrinter owingPrinter = new OwingPrinter();
+    	List<Order> orderList = new ArrayList<Order>();
+    	orderList.add(new Order(60));
+    	orderList.add(new Order(6));
+    	owingPrinter.printOwing("yang", orderList);
+	}
+    
+    public static void printBanner() {
+    	System.out.println ("*****************************");
+        System.out.println ("****** Customer totals ******");
+        System.out.println ("*****************************");
     }
 }
 
 class Order {
-    private final double amount;
+    private double amount;
 
     public Order(double amount) {
         this.amount = amount;
@@ -37,4 +48,6 @@ class Order {
     public double getAmount() {
         return amount;
     }
+    
+    
 }
